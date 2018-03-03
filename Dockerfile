@@ -1,11 +1,11 @@
-FROM bitnami/minideb-extras:jessie-r24
+FROM bitnami/minideb-extras:jessie-r24 AS rootfs
 LABEL maintainer "prasad<pprasad.java@gmail.com>"
 
 # Install required system packages and dependencies
 RUN install_packages libaio1 libc6 libgcc1 libncurses5 libnuma1 libsasl2-2 libssl1.0.0 libstdc++6 libtinfo5 zlib1g
 RUN bitnami-pkg unpack mysql-5.7.21-2 --checksum 1e34abf97fb38d06e19c7a1fa300166f305a7a99cadfee1efca3ad7ed503b3cf
 
-COPY rootfs /
+COPY --from=rootfs /
 
 ENV ALLOW_EMPTY_PASSWORD="yes" \
     BITNAMI_APP_NAME="mysql" \
